@@ -4,10 +4,6 @@ export interface Character {
   gender: string;
   status: string;
   species: string;
-  location: {
-    name: string;
-    url: string;
-  };
   image: string;
   episode: string[];
 }

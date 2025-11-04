@@ -13,13 +13,8 @@ export const fetchCharacters = async (
 
   const response = await fetch(url);
 
-  // if (!response.ok) {
-  //   const errorData = await response.json().catch(() => ({}));
-  //   const message = errorData.error || `HTTP error! status: ${response.status}`;
-  //   throw new Error(message);
-  // }
-
   const data = await response.json();
+  console.log(data.results);
 
   if (data.error) {
     console.log(data.error);
