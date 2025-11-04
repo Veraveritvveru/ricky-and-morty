@@ -10,7 +10,7 @@ interface HeaderProps {
 }
 
 export default class Header extends Component<HeaderProps> {
-  render() {
+  public override render() {
     return (
       <header className={styles.header}>
         <img src={logo} alt="Rick and Morty logo" />

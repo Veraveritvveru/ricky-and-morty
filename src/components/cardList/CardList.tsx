@@ -5,7 +5,7 @@ import CharacterCard from '../CharacterCard/CharacterCard';
 import type { CardListProps } from '../types';
 
 export default class CardList extends Component<CardListProps> {
-  render() {
+  public override render() {
     return (
       <section className={styles.cardList}>
         {this.props.results.map((character) => (

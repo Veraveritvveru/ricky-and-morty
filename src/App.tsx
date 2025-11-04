@@ -1,7 +1,11 @@
+import './App.scss';
 import { Component } from 'react';
 import type { AppProps, AppState } from './types';
 import Header from './components/Header/Header';
 import CardList from './components/CardList/CardList';
+import { fetchCharacters } from './services/characterService';
+import NoResults from './components/NoResults/NoResults';
+import Loader from './components/Loader/Loader';
 
 export default class App extends Component<AppProps, AppState> {
   state: AppState = {
@@ -10,76 +14,57 @@ export default class App extends Component<AppProps, AppState> {
     loading: false,
     error: null,
   };
-  constructor(props: AppProps) {
-    super(props);
-    console.log('constr');
-  }
 
-  handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  override componentDidMount = async (): Promise<void> => {
+    this.loadCharacters();
+  };
+
+  private handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     this.setState({ inputValue: e.target.value });
   };
 
-  fetchData = async (searchQuery?: string) => {
-    try {
-      if (searchQuery?.trim() === '') {
-        const responseAll = await fetch(
-          'https://rickandmortyapi.com/api/character'
-        );
+  private handleSubmitButton = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
+    e.preventDefault();
+    const { inputValue } = this.state;
+    this.loadCharacters(inputValue);
+    this.setState({ inputValue: '' });
+  };
 
-        if (!responseAll.ok) {
-          throw new Error('No response');
-        }
-        const data = await responseAll.json();
-        console.log(data.results);
-        this.setState({ searchResults: data.results, loading: false });
-      } else {
-        if (searchQuery) {
-          const response = await fetch(
-            `https://rickandmortyapi.com/api/character/?name=${this.validateSeachQuery(searchQuery)}`
-          );
-          if (!response.ok) {
-            throw new Error('No response');
-          }
-          const data = await response.json();
-          console.log(data);
-          this.setState({ searchResults: data.results, loading: false });
-        }
-      }
+  private loadCharacters = async (inputValue: string = ''): Promise<void> => {
+    this.setState({ loading: true, error: null });
+
+    try {
+      const results = await fetchCharacters(inputValue);
+      this.setState({ searchResults: results, loading: false });
     } catch (error) {
-      if (error instanceof Error) {
-        this.setState({ error: error.message, loading: false });
-      } else {
-        this.setState({ error: 'Неизвестная ошибка', loading: false });
-      }
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      this.setState({ error: message, loading: false });
     }
   };
 
-  validateSeachQuery(searchQuery: string) {
-    return searchQuery.toLowerCase().trim().replace(/\s+/g, '20%');
-  }
+  public override render() {
+    const { inputValue, searchResults, loading } = this.state;
 
-  handleSubmitButton = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    this.setState({ loading: true });
-    const searchQuery: string = this.state.inputValue;
-    this.fetchData(searchQuery);
-  };
+    if (loading) {
+      return <Loader />;
+    }
 
-  render() {
     return (
       <div className="App">
         <Header
-          inputValue={this.state.inputValue}
+          inputValue={inputValue}
           onInputChange={this.handleInputChange}
           onSearchSubmit={this.handleSubmitButton}
         />
-
-        {/* <ul>
-          {this.state.searchResults.map((item) => (
-            <li key={item.id}>{item.name}</li>
-          ))}
-        </ul> */}
-        <CardList results={this.state.searchResults} />
+        {searchResults.length ? (
+          <CardList results={searchResults} />
+        ) : (
+          <NoResults />
+        )}
       </div>
     );
   }

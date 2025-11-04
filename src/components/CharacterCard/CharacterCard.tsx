@@ -7,7 +7,7 @@ interface CharacterCardProps {
 }
 
 export default class CharacterCard extends Component<CharacterCardProps> {
-  render() {
+  public override render() {
     return (
       <div className={styles.card}>
         <img

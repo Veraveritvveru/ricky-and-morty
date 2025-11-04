@@ -9,7 +9,7 @@ interface ButtonProps {
 }
 
 class Button extends Component<ButtonProps> {
-  render() {
+  public override render() {
     const { children, onClick, disabled = false, type } = this.props;
 
     return (

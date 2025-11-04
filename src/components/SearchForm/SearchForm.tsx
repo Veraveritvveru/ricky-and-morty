@@ -9,7 +9,7 @@ interface SearchFormProps {
 }
 
 export default class SearchForm extends Component<SearchFormProps> {
-  render() {
+  public override render() {
     return (
       <form onSubmit={this.props.onSearchSubmit} className={styles.searchForm}>
         <input
