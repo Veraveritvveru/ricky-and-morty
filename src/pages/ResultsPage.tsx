@@ -4,9 +4,9 @@ import type { Character } from '../types';
 import { fetchCharacters } from '../services/characterService';
 import Header from '../components/Header/Header';
 import Loader from '../components/Loader/Loader';
-import CardList from '../components/CardList/CardList';
 import NoResults from '../components/NoResults/NoResults';
 import Pagination from '../components/Pagination/Pagination';
+// import CardList from '../components/CardList/CardList';
 
 const ResultsPage: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
@@ -71,7 +71,7 @@ const ResultsPage: React.FC = () => {
         <Loader />
       ) : searchResults.length ? (
         <>
-          <CardList results={searchResults} />
+          {/* <CardList results={searchResults} /> */}
 
           <div>
             <Pagination
