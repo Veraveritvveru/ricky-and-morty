@@ -6,6 +6,7 @@ import Header from '../components/Header/Header';
 import Loader from '../components/Loader/Loader';
 import NoResults from '../components/NoResults/NoResults';
 import Pagination from '../components/Pagination/Pagination';
+// import CardList from '../components/CardList/CardList';
 import CardList2 from '../components/CardList2/CardList2';
 
 const ResultsPage: React.FC = () => {

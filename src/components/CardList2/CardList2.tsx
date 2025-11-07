@@ -1,5 +1,7 @@
-const CardList2 = () => {
-  return <div style={{ marginTop: 80 }}>CardList2</div>;
+import styles from './CardList2.module.scss';
+
+const CardList2: React.FC = () => {
+  return <div className={styles.cardList}>CardList2</div>;
 };
 
 export default CardList2;
