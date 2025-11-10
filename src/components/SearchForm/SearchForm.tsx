@@ -17,7 +17,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
     <form onSubmit={onSearchSubmit} className={styles.searchForm}>
       <input
         className={styles.searchInput}
-        type="text"
+        type="search"
         onChange={onInputChange}
         placeholder="Search for a character..."
         value={inputValue}

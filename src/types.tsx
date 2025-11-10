@@ -1,5 +1,3 @@
-export type AppProps = Record<string, never>;
-
 export interface Character {
   id: number;
   name: string;
@@ -21,9 +19,12 @@ export interface Character {
   created: string;
 }
 
-export interface AppState {
-  inputValue: string;
-  searchResults: Character[];
-  loading: boolean;
-  error: string | null;
+export interface FilteredCharacter {
+  id: number;
+  name: string;
+  gender: string;
+  status: string;
+  species: string;
+  image: string;
+  episode: string[];
 }

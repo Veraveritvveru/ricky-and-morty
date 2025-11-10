@@ -1,16 +1,18 @@
 import React from 'react';
-import type { Character } from '../types';
+import type { FilteredCharacter } from '../../types';
 import styles from './CharacterCard.module.scss';
 import CharacterImage from '../CharacterImage/CharacterImage';
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 
 interface CharacterCardProps {
-  character: Character;
+  character: FilteredCharacter;
 }
 
 const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
+  const [searchParams] = useSearchParams();
+
   return (
-    <Link to={`/${character.id}`}>
+    <Link to={`${character.id}?${searchParams}`}>
       <div className={styles.card}>
         <CharacterImage src={character.image} alt={character.name} />
         <div className={styles.cardInfo}>

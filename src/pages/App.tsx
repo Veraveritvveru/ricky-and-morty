@@ -7,7 +7,7 @@ import Loader from '../components/Loader/Loader';
 import NoResults from '../components/NoResults/NoResults';
 import Pagination from '../components/Pagination/Pagination';
 import CardList from '../components/CardList2/CardList2';
-import { useSearchParams } from 'react-router';
+import { Outlet, useSearchParams } from 'react-router';
 import useLocalStorage from '../hooks/useLocalSrtorage';
 
 const App: React.FC = () => {
@@ -47,11 +47,10 @@ const App: React.FC = () => {
     loadCharacters(urlName, urlPage);
   }, []);
 
-  const handleSubmitButton = async (
+  const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-
     const newPage = 1;
     setSearchParams({ name: inputValue, page: String(newPage) });
     loadCharacters(inputValue);
@@ -60,7 +59,7 @@ const App: React.FC = () => {
   const handlePageChange = async (page: number) => {
     if (page < 1 || page > totalPages || page === currentPage) return;
 
-    setSearchParams({ page: String(page) });
+    setSearchParams({ name: inputValue, page: String(page) });
     await loadCharacters(inputValue, page);
   };
 
@@ -69,7 +68,7 @@ const App: React.FC = () => {
       <Header
         inputValue={inputValue}
         onInputChange={(e) => setInputValue(e.target.value)}
-        onSearchSubmit={handleSubmitButton}
+        onSearchSubmit={handleSubmit}
       />
 
       {isLoading ? (
@@ -90,6 +89,7 @@ const App: React.FC = () => {
       )}
 
       {error && <div className="error">{error}</div>}
+      <Outlet />
     </>
   );
 };

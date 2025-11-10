@@ -1,9 +1,11 @@
 import React from 'react';
 import styles from './CardList2.module.scss';
 import CharacterCard from '../CharacterCard/CharacterCard';
+import type { FilteredCharacter } from '../../types';
 
-import type { CardListProps } from '../types';
-
+interface CardListProps {
+  results: FilteredCharacter[];
+}
 const CardList: React.FC<CardListProps> = ({ results }) => {
   return (
     <section className={styles.cardList}>

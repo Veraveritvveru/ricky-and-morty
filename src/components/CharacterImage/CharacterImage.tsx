@@ -3,8 +3,8 @@ import placeholder from '../../assets/img-placeholder.webp';
 import styles from './CharacterImage.module.scss';
 
 interface CharacterImageProps {
-  src: string;
-  alt: string;
+  src?: string;
+  alt?: string;
 }
 
 const CharacterImage: React.FC<CharacterImageProps> = ({ src, alt }) => {
